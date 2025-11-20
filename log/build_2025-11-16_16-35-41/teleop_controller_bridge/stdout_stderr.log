@@ -1,0 +1,148 @@
+running egg_info
+creating ../build/teleop_controller_bridge/teleop_controller_bridge.egg-info
+writing ../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/PKG-INFO
+writing dependency_links to ../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/dependency_links.txt
+writing entry points to ../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/entry_points.txt
+writing requirements to ../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/requires.txt
+writing top-level names to ../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/top_level.txt
+writing manifest file '../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/SOURCES.txt'
+reading manifest file '../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file '../build/teleop_controller_bridge/teleop_controller_bridge.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build
+creating /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib
+creating /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge
+copying teleop_controller_bridge/__init__.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge
+copying teleop_controller_bridge/ccta_bridge_node.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge
+creating /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets
+copying teleop_controller_bridge/ccta_assets/__init__.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets
+copying teleop_controller_bridge/ccta_assets/model.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets
+copying teleop_controller_bridge/ccta_assets/controller.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets
+copying teleop_controller_bridge/ccta_assets/utils.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets
+copying teleop_controller_bridge/ccta_assets/DobCBFHelper.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets
+copying teleop_controller_bridge/ccta_assets/LSTMHelper.py -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets
+/usr/lib/python3/dist-packages/setuptools/command/build_py.py:204: _Warning: Package 'teleop_controller_bridge.ccta_assets.data' is absent from the `packages` configuration.
+!!
+
+        ********************************************************************************
+        ############################
+        # Package would be ignored #
+        ############################
+        Python recognizes 'teleop_controller_bridge.ccta_assets.data' as an importable package[^1],
+        but it is absent from setuptools' `packages` configuration.
+
+        This leads to an ambiguous overall configuration. If you want to distribute this
+        package, please make sure that 'teleop_controller_bridge.ccta_assets.data' is explicitly added
+        to the `packages` configuration field.
+
+        Alternatively, you can also rely on setuptools' discovery methods
+        (for example by using `find_namespace_packages(...)`/`find_namespace:`
+        instead of `find_packages(...)`/`find:`).
+
+        You can read more about "package discovery" on setuptools documentation page:
+
+        - https://setuptools.pypa.io/en/latest/userguide/package_discovery.html
+
+        If you don't want 'teleop_controller_bridge.ccta_assets.data' to be distributed and are
+        already explicitly excluding 'teleop_controller_bridge.ccta_assets.data' via
+        `find_namespace_packages(...)/find_namespace` or `find_packages(...)/find`,
+        you can try to use `exclude_package_data`, or `include-package-data=False` in
+        combination with a more fine grained `package-data` configuration.
+
+        You can read more about "package data files" on setuptools documentation page:
+
+        - https://setuptools.pypa.io/en/latest/userguide/datafiles.html
+
+
+        [^1]: For Python, any directory (with suitable naming) can be imported,
+              even if it does not contain any `.py` files.
+              On the other hand, currently there is no concept of package data
+              directory, all directories are treated like packages.
+        ********************************************************************************
+
+!!
+  check.warn(importable)
+/usr/lib/python3/dist-packages/setuptools/command/build_py.py:204: _Warning: Package 'teleop_controller_bridge.ccta_assets.data.training_data' is absent from the `packages` configuration.
+!!
+
+        ********************************************************************************
+        ############################
+        # Package would be ignored #
+        ############################
+        Python recognizes 'teleop_controller_bridge.ccta_assets.data.training_data' as an importable package[^1],
+        but it is absent from setuptools' `packages` configuration.
+
+        This leads to an ambiguous overall configuration. If you want to distribute this
+        package, please make sure that 'teleop_controller_bridge.ccta_assets.data.training_data' is explicitly added
+        to the `packages` configuration field.
+
+        Alternatively, you can also rely on setuptools' discovery methods
+        (for example by using `find_namespace_packages(...)`/`find_namespace:`
+        instead of `find_packages(...)`/`find:`).
+
+        You can read more about "package discovery" on setuptools documentation page:
+
+        - https://setuptools.pypa.io/en/latest/userguide/package_discovery.html
+
+        If you don't want 'teleop_controller_bridge.ccta_assets.data.training_data' to be distributed and are
+        already explicitly excluding 'teleop_controller_bridge.ccta_assets.data.training_data' via
+        `find_namespace_packages(...)/find_namespace` or `find_packages(...)/find`,
+        you can try to use `exclude_package_data`, or `include-package-data=False` in
+        combination with a more fine grained `package-data` configuration.
+
+        You can read more about "package data files" on setuptools documentation page:
+
+        - https://setuptools.pypa.io/en/latest/userguide/datafiles.html
+
+
+        [^1]: For Python, any directory (with suitable naming) can be imported,
+              even if it does not contain any `.py` files.
+              On the other hand, currently there is no concept of package data
+              directory, all directories are treated like packages.
+        ********************************************************************************
+
+!!
+  check.warn(importable)
+creating /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/data
+copying teleop_controller_bridge/ccta_assets/data/sta_lstm_10272020.tar -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/data
+creating /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/data/training_data
+copying teleop_controller_bridge/ccta_assets/data/training_data/CP_data.csv -> /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/data/training_data
+running install
+running install_lib
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/__init__.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/data
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/data/sta_lstm_10272020.tar -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/data
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/data/training_data
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/data/training_data/CP_data.csv -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/data/training_data
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/__init__.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/model.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/controller.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/utils.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/DobCBFHelper.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_assets/LSTMHelper.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets
+copying /home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/build/lib/teleop_controller_bridge/ccta_bridge_node.py -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/__init__.py to __init__.cpython-312.pyc
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/__init__.py to __init__.cpython-312.pyc
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/model.py to model.cpython-312.pyc
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/controller.py to controller.cpython-312.pyc
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/utils.py to utils.cpython-312.pyc
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/DobCBFHelper.py to DobCBFHelper.cpython-312.pyc
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_assets/LSTMHelper.py to LSTMHelper.cpython-312.pyc
+byte-compiling /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge/ccta_bridge_node.py to ccta_bridge_node.cpython-312.pyc
+running install_data
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/share/ament_index
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/share/ament_index/resource_index
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/share/ament_index/resource_index/packages
+copying resource/teleop_controller_bridge -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/share/ament_index/resource_index/packages
+copying package.xml -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/share/teleop_controller_bridge
+creating /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/teleop_controller_bridge
+copying scripts/ccta_teleop_controller -> /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/teleop_controller_bridge
+running install_egg_info
+Copying ../build/teleop_controller_bridge/teleop_controller_bridge.egg-info to /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/lib/python3.12/site-packages/teleop_controller_bridge-0.1.0-py3.12.egg-info
+running install_scripts
+Installing ccta_teleop_controller script to /home/kyle/Documents/ros2_bridge/install/teleop_controller_bridge/bin
+writing list of installed files to '/home/kyle/Documents/ros2_bridge/build/teleop_controller_bridge/install.log'

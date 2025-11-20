@@ -1,0 +1,25 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from teleop_bridge_msgs/msg/TrackedVehicle.msg
+// generated code does not contain a copyright notice
+
+#include "builtin_interfaces/msg/Time.idl"
+#include "geometry_msgs/msg/Pose.idl"
+#include "geometry_msgs/msg/Twist.idl"
+
+module teleop_bridge_msgs {
+  module msg {
+    struct TrackedVehicle {
+      builtin_interfaces::msg::Time stamp;
+
+      uint32 id;
+
+      string label;
+
+      boolean active;
+
+      geometry_msgs::msg::Pose pose;
+
+      geometry_msgs::msg::Twist twist;
+    };
+  };
+};

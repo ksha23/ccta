@@ -1,0 +1,6 @@
+/home/kyle/Documents/ros2_bridge/build/teleop_bridge_msgs/rosidl_adapter/teleop_bridge_msgs:msg/DriverInput.idl
+/home/kyle/Documents/ros2_bridge/build/teleop_bridge_msgs/rosidl_adapter/teleop_bridge_msgs:msg/EgoState.idl
+/home/kyle/Documents/ros2_bridge/build/teleop_bridge_msgs/rosidl_adapter/teleop_bridge_msgs:msg/TrackedVehicle.idl
+/home/kyle/Documents/ros2_bridge/build/teleop_bridge_msgs/rosidl_adapter/teleop_bridge_msgs:msg/TrackedVehicleArray.idl
+/home/kyle/Documents/ros2_bridge/build/teleop_bridge_msgs/rosidl_adapter/teleop_bridge_msgs:msg/ControlCommand.idl
+/home/kyle/Documents/ros2_bridge/build/teleop_bridge_msgs/rosidl_adapter/teleop_bridge_msgs:msg/WarningStatus.idl

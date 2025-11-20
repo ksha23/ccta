@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "teleop_bridge_msgs__py",
+		"source" : "/home/kyle/Documents/ros2_bridge/build/teleop_bridge_msgs/teleop_bridge_msgs__py"
+	}
+}

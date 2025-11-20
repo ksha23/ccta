@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: teleop-controller-bridge
+Version: 0.1.0
+Summary: ROS2 bridge that wraps the CCTA teleoperation safety controller.
+Maintainer: Kyle
+Maintainer-email: kyle@example.com
+License: BSD-3-Clause

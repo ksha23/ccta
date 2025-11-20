@@ -1,0 +1,33 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/control_command__type_support.cpp.o"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/control_command__type_support.cpp.o.d"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/driver_input__type_support.cpp.o"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/driver_input__type_support.cpp.o.d"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/ego_state__type_support.cpp.o"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/ego_state__type_support.cpp.o.d"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/tracked_vehicle__type_support.cpp.o"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/tracked_vehicle__type_support.cpp.o.d"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/tracked_vehicle_array__type_support.cpp.o"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/tracked_vehicle_array__type_support.cpp.o.d"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/warning_status__type_support.cpp.o"
+  "CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/warning_status__type_support.cpp.o.d"
+  "libteleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.pdb"
+  "libteleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.so"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/control_command__rosidl_typesupport_fastrtps_cpp.hpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/control_command__type_support.cpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/driver_input__type_support.cpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/ego_state__type_support.cpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/tracked_vehicle__type_support.cpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/tracked_vehicle_array__type_support.cpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/dds_fastrtps/warning_status__type_support.cpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/driver_input__rosidl_typesupport_fastrtps_cpp.hpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/ego_state__rosidl_typesupport_fastrtps_cpp.hpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/tracked_vehicle__rosidl_typesupport_fastrtps_cpp.hpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/tracked_vehicle_array__rosidl_typesupport_fastrtps_cpp.hpp"
+  "rosidl_typesupport_fastrtps_cpp/teleop_bridge_msgs/msg/detail/warning_status__rosidl_typesupport_fastrtps_cpp.hpp"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/teleop_bridge_msgs__rosidl_typesupport_fastrtps_cpp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
