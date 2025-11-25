@@ -284,6 +284,11 @@ class CctaController:
             SV_pos=sv.positions,
             eps=0.09,
         )
+        
+        # Debug logging
+        # if sc_pred < 2.0: # Only log if score is somewhat low
+            #  print(f"Score: {sc_pred:.4f}, Warning: {warningsignal}")
+
         msg = WarningStatus()
         msg.stamp = pose.stamp
         msg.warning = bool(warningsignal)
@@ -445,7 +450,7 @@ class CctaBridgeNode(Node):
         self.declare_parameter("ccta_repo_path", "")
         self.declare_parameter("control_dt", 0.02)
         self.declare_parameter("low_level_dt", 0.02)
-        self.declare_parameter("td", 10)
+        self.declare_parameter("td", 1)
         self.declare_parameter("k1", 0.6)
         self.declare_parameter("k2", 2.0)
         self.declare_parameter("use_cuda", False)
