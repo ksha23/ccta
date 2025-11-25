@@ -1,0 +1,19 @@
+name: chrono312
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - matplotlib
+  - mkl=2020
+  - scipy
+  - numpy
+  - pandas
+  - casadi
+  - pygame
+  - pychrono=9.0.1
+  - empy
+  - catkin_pkg
+  - lark
+  - pyyaml
+prefix: /home/kyle/miniconda3/envs/chrono312
