@@ -39,12 +39,17 @@ def FindNbrs(all_traj, args):
     nbrs_a_heading = re_nbrs_heading[:,ind_list,:]
 
     grids = np.zeros((3,13),dtype='bool')
-    ind_list = []
+    valid_neighbors = []
     for i in range(nbrs_a_heading.shape[1]):
         gx, gy = GetGridInd(nbrs_a_heading[-1,i,:])
         if 0 <= gx < 13 and 0 <= gy < 3:
             grids[gy, gx] = True
-            ind_list.append(i)
+            valid_neighbors.append((gy, gx, i))
+    
+    # Sort neighbors by grid position (lane, then longitudinal) to match masked_scatter_ order
+    valid_neighbors.sort(key=lambda x: (x[0], x[1]))
+    ind_list = [x[2] for x in valid_neighbors]
+    
     # nbrs_final = nbrs_a[:,ind_list,-1::-1]
     nbrs_final = nbrs_a_heading[:,ind_list,:]
     # nbrs_final = nbrs_final[:,:,-1::-1]

@@ -1433,7 +1433,8 @@ def DOBCBF_ACC_switch(x, ud, p_dob, ctrlpara, dobpara, weight1, weight2, SV_pos,
             flag_brake = result.success
             if not result.success or u[1] > 0:
                 print('#################    Infeasible!!!   ##################')
-                alpha, beta = ud
+                alpha = -1.0
+                beta = ud[1]
             else:
                 u1, u2 = u[0], u[1]
                 alpha = u2

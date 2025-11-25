@@ -13,6 +13,8 @@ import numpy as np
 import rclpy
 import torch
 from geometry_msgs.msg import Quaternion
+from std_msgs.msg import ColorRGBA
+from visualization_msgs.msg import Marker, MarkerArray
 from rclpy.node import Node
 
 from teleop_bridge_msgs.msg import (
@@ -122,6 +124,10 @@ class CctaController:
         k2: float = 2.0,
         use_cuda: bool = False,
         enable_warning: bool = True,
+        l1cbf: float = 3.0,
+        l2cbf: float = 5.0,
+        dob_l0x: float = 20.0,
+        dob_l1x: float = 100.0,
     ):
         self.repo_path = repo_path
         if str(repo_path) not in sys.path:
@@ -181,10 +187,10 @@ class CctaController:
         self.Qwarning = np.array([[1.0 / 400.0, 0.0], [0.0, 1.0]])
         self.cp_data_f0 = np.array([row for row in self.cp_data if row[0] < self.f0warning])
 
-        self.ctrlpara = {"l1cbf": 3.0, "l2cbf": 5.0, "kblf": 1.0 / control_dt}
+        self.ctrlpara = {"l1cbf": l1cbf, "l2cbf": l2cbf, "kblf": 1.0 / control_dt}
         self.dobpara = {
-            "l0x": 20.0,
-            "l1x": 100.0,
+            "l0x": dob_l0x,
+            "l1x": dob_l1x,
             "l0y": 10.0,
             "l1y": 100.0,
             "av": 10.0,
@@ -217,14 +223,18 @@ class CctaController:
     def update_surroundings(self, msg: TrackedVehicleArray) -> None:
         self.sv_msg = msg
 
-    def _build_sv_arrays(self) -> SurroundingVehicles:
+    def _build_sv_arrays(self, ego_pos: np.ndarray) -> SurroundingVehicles:
         max_count = self.max_neighbors
         pos = np.zeros((2, max_count))
         vel = np.zeros((2, max_count))
         if not self.sv_msg or not self.sv_msg.vehicles:
             return SurroundingVehicles(pos, vel)
 
+        # Sort by ID to ensure consistent history slots for LSTM
+        # This matches the behavior of exp1/exp2 where vehicles are fixed agents.
+        # Sorting by distance would cause slot-switching, corrupting the trajectory history.
         vehicles = sorted(self.sv_msg.vehicles, key=lambda v: v.id)
+        
         for idx in range(min(max_count, len(vehicles))):
             veh = vehicles[idx]
             pos[0, idx] = veh.pose.position.x
@@ -288,12 +298,72 @@ class CctaController:
         diff = (x - y) @ Rmat.T - np.array([self.bias, 0.0])
         return float(diff @ Q @ diff)
 
-    def step(self) -> Tuple[Optional[ControlCommand], Optional[WarningStatus]]:
-        if not self.driver_msg or not self.ego_msg:
-            return None, None
+    def _generate_markers(self, ego: EgoState, sv: SurroundingVehicles, cmd: ControlCommand, warning: Optional[WarningStatus]) -> MarkerArray:
+        markers = MarkerArray()
+        
+        # Ego Marker
+        m = Marker()
+        m.header.frame_id = "map" # Assuming map frame
+        m.header.stamp = ego.stamp
+        m.ns = "ego"
+        m.id = 0
+        m.type = Marker.CUBE
+        m.action = Marker.ADD
+        m.pose = ego.pose
+        m.scale.x = 4.5
+        m.scale.y = 1.8
+        m.scale.z = 1.5
+        m.color = ColorRGBA(r=0.0, g=1.0, b=0.0, a=0.8)
+        markers.markers.append(m)
 
-        sv = self._build_sv_arrays()
+        # SV Markers
+        for i in range(sv.positions.shape[1]):
+            if sv.positions[0, i] == 0 and sv.positions[1, i] == 0:
+                continue
+            m = Marker()
+            m.header.frame_id = "map"
+            m.header.stamp = ego.stamp
+            m.ns = "sv"
+            m.id = i + 1
+            m.type = Marker.CUBE
+            m.action = Marker.ADD
+            m.pose.position.x = sv.positions[0, i]
+            m.pose.position.y = sv.positions[1, i]
+            m.pose.position.z = 0.5
+            m.pose.orientation.w = 1.0 
+            m.scale.x = 4.5
+            m.scale.y = 1.8
+            m.scale.z = 1.5
+            m.color = ColorRGBA(r=1.0, g=0.0, b=0.0, a=0.8)
+            markers.markers.append(m)
+
+        # Warning Text
+        m = Marker()
+        m.header.frame_id = "map"
+        m.header.stamp = ego.stamp
+        m.ns = "text"
+        m.id = 100
+        m.type = Marker.TEXT_VIEW_FACING
+        m.action = Marker.ADD
+        m.pose.position.x = ego.pose.position.x
+        m.pose.position.y = ego.pose.position.y
+        m.pose.position.z = 3.0
+        m.scale.z = 1.0
+        score = warning.score if warning else 0.0
+        is_warn = warning.warning if warning else False
+        m.text = f"Warn: {is_warn}\nScore: {score:.2f}\nAlpha: {self.alpha:.2f}"
+        m.color = ColorRGBA(r=1.0, g=1.0, b=0.0, a=1.0) if is_warn else ColorRGBA(r=1.0, g=1.0, b=1.0, a=1.0)
+        markers.markers.append(m)
+
+        return markers
+
+    def step(self) -> Tuple[Optional[ControlCommand], Optional[WarningStatus], Optional[MarkerArray]]:
+        if not self.driver_msg or not self.ego_msg:
+            return None, None, None
+
         ego = self.ego_msg
+        ego_pos = np.array([ego.pose.position.x, ego.pose.position.y])
+        sv = self._build_sv_arrays(ego_pos)
         driver = self.driver_msg
 
         throttle_cmd = float(driver.throttle - driver.braking)
@@ -347,6 +417,13 @@ class CctaController:
         cmd.throttle = alpha
         cmd.valid = True
 
+        # Log safety intervention details
+        # If the controller is significantly altering the input (e.g. braking when user wants to go, or reducing throttle)
+        if alpha < ref_throttle - 0.05:
+             print(f"[Safety Intervention] User Input: {ref_throttle:.2f} -> Safety Output: {alpha:.2f} (Reduction: {ref_throttle - alpha:.2f})")
+        elif alpha < -0.1:
+             print(f"[Controller] Braking: {alpha:.4f}")
+
         warning_msg = None
         if self.enable_warning:
             self.sample_timer += self.control_dt
@@ -354,8 +431,10 @@ class CctaController:
             if self.sample_timer >= self.sample_period:
                 warning_msg = self._run_warning(ego, sv)
                 self.sample_timer = 0.0
+        
+        markers = self._generate_markers(ego, sv, cmd, warning_msg)
 
-        return cmd, warning_msg
+        return cmd, warning_msg, markers
 
 
 class CctaBridgeNode(Node):
@@ -371,6 +450,12 @@ class CctaBridgeNode(Node):
         self.declare_parameter("k2", 2.0)
         self.declare_parameter("use_cuda", False)
         self.declare_parameter("enable_warning", True)
+        
+        # Tuning parameters
+        self.declare_parameter("l1cbf", 3.0)
+        self.declare_parameter("l2cbf", 5.0)
+        self.declare_parameter("dob_l0x", 20.0)
+        self.declare_parameter("dob_l1x", 100.0)
 
         repo_path = _resolve_repo_path(self.get_parameter("ccta_repo_path").get_parameter_value().string_value)
         control_dt = self.get_parameter("control_dt").get_parameter_value().double_value
@@ -380,6 +465,11 @@ class CctaBridgeNode(Node):
         k2 = self.get_parameter("k2").get_parameter_value().double_value
         use_cuda = self.get_parameter("use_cuda").get_parameter_value().bool_value
         enable_warning = self.get_parameter("enable_warning").get_parameter_value().bool_value
+        
+        l1cbf = self.get_parameter("l1cbf").get_parameter_value().double_value
+        l2cbf = self.get_parameter("l2cbf").get_parameter_value().double_value
+        dob_l0x = self.get_parameter("dob_l0x").get_parameter_value().double_value
+        dob_l1x = self.get_parameter("dob_l1x").get_parameter_value().double_value
 
         if not repo_path.exists():
             raise RuntimeError(f"CCTA repository not found at {repo_path}")
@@ -394,6 +484,10 @@ class CctaBridgeNode(Node):
             k2=k2,
             use_cuda=use_cuda,
             enable_warning=enable_warning,
+            l1cbf=l1cbf,
+            l2cbf=l2cbf,
+            dob_l0x=dob_l0x,
+            dob_l1x=dob_l1x,
         )
 
         self.create_subscription(DriverInput, "teleop/raw_input", self._driver_callback, 10)
@@ -402,6 +496,7 @@ class CctaBridgeNode(Node):
 
         self.cmd_pub = self.create_publisher(ControlCommand, "teleop/safety_cmd", 10)
         self.warning_pub = self.create_publisher(WarningStatus, "teleop/warning", 10)
+        self.viz_pub = self.create_publisher(MarkerArray, "teleop/viz", 10)
 
         self.create_timer(control_dt, self._timer_callback)
 
@@ -415,11 +510,19 @@ class CctaBridgeNode(Node):
         self.controller.update_surroundings(msg)
 
     def _timer_callback(self) -> None:
-        cmd, warning = self.controller.step()
+        cmd, warning, markers = self.controller.step()
         if cmd:
             self.cmd_pub.publish(cmd)
+            # Calculate latency
+            now = self.get_clock().now()
+            latency = (now.nanoseconds - rclpy.time.Time.from_msg(cmd.stamp).nanoseconds) / 1e9
+            # Log alpha and latency
+            self.get_logger().info(f"Alpha: {cmd.throttle:.4f} | Latency: {latency:.4f}s", throttle_duration_sec=0.5)
+            
         if warning:
             self.warning_pub.publish(warning)
+        if markers:
+            self.viz_pub.publish(markers)
 
 
 def main(args: Optional[List[str]] = None) -> None:
