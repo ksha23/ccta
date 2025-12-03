@@ -26,6 +26,8 @@ from teleop_bridge_msgs.msg import (
     WarningStatus,
 )
 
+enable_intervention = True
+
 
 def _resolve_repo_path(param_path: Optional[str]) -> Path:
     """Return the path to the CCTA repository."""
@@ -183,7 +185,7 @@ class CctaController:
         self.r_precpt = 20.0
         self.bias = 5.0
         self.weight1 = 1.0 / 100.0
-        self.weight2 = 1.0 / 16.0
+        self.weight2 = 1.0 / 9.0
         self.Qwarning = np.array([[1.0 / 400.0, 0.0], [0.0, 1.0]])
         self.cp_data_f0 = np.array([row for row in self.cp_data if row[0] < self.f0warning])
 
@@ -391,23 +393,27 @@ class CctaController:
         ud = (ref_throttle, ref_dbeta)
         upre = (self.alpha, self.dbeta)
 
-        (alpha, dbeta), _ = self._DOBCBF_dbeta(
-            veh_state,
-            ud,
-            upre,
-            self.p_dob,
-            self.ctrlpara,
-            self.dobpara,
-            self.weight1,
-            self.weight2,
-            sv.positions,
-            sv.velocities,
-            self.ro,
-            self.r_precpt,
-            self.bias,
-            True,
-            "balance",
-        )
+        if enable_intervention:
+            (alpha, dbeta), _ = self._DOBCBF_dbeta(
+                veh_state,
+                ud,
+                upre,
+                self.p_dob,
+                self.ctrlpara,
+                self.dobpara,
+                self.weight1,
+                self.weight2,
+                sv.positions,
+                sv.velocities,
+                self.ro,
+                self.r_precpt,
+                self.bias,
+                True,
+                "balance",
+            )
+        else:
+            alpha, dbeta = ref_throttle, ref_steering
+
         alpha = float(np.clip(alpha, -1.0, 1.0))
         self.beta += dbeta * self.low_level_dt
         self.alpha = alpha
@@ -422,12 +428,15 @@ class CctaController:
         cmd.throttle = alpha
         cmd.valid = True
 
-        # Log safety intervention details
-        # If the controller is significantly altering the input (e.g. braking when user wants to go, or reducing throttle)
+        # Log throttle interventions
         if alpha < ref_throttle - 0.05:
              print(f"[Safety Intervention] User Input: {ref_throttle:.2f} -> Safety Output: {alpha:.2f} (Reduction: {ref_throttle - alpha:.2f})")
         elif alpha < -0.1:
              print(f"[Controller] Braking: {alpha:.4f}")
+
+        # Log steering interventions
+        if abs(self.beta - ref_beta) > 0.1:
+                print(f"[Steering Intervention] User Input: {ref_beta:.2f} -> Safety Output: {self.beta:.2f} (Delta: {self.beta - ref_beta:.2f})")
 
         warning_msg = None
         if self.enable_warning:
